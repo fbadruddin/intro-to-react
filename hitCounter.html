@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <title>My Second React App</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.1.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.1.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+    <script type="text/babel">
+        class HitCounter extends React.Component {
+            constructor(props) {
+                super(props);
+                this.buttonClickCounter = this.buttonClickCounter.bind(this);                
+                this.countClicks = 0;
+            }
+           buttonClickCounter() {
+                this.countClicks++;
+
+                var div = document.getElementById('counterDiv'); 
+                if(div === null)
+                {
+                    div = document.createElement('div');
+                    div.id ='counterDiv';
+                    document.getElementById('app').appendChild(div);
+                }
+                div.innerHTML = 'you hit me <b>' +  `${this.countClicks}`  + '</b> times';
+            }
+          render() {
+            return (
+              <div>
+                <button onClick={this.buttonClickCounter}>hit me!</button>
+              </div>
+            );
+          }
+        }
+
+        ReactDOM.render(
+          <HitCounter />, document.getElementById('app')
+        );
+     </script>
+</body>
+
+</html>
