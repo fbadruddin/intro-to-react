@@ -13,14 +13,25 @@
 
     <script type="text/babel">
         class HitCounter extends React.Component {
+            handleClick () {
+              this.updateHitCounter();
+              this.displayCurrentHits();
+            }
+
             constructor(props) {
                 super(props);
-                this.buttonClickCounter = this.buttonClickCounter.bind(this);                
-                this.countClicks = 0;
+                this.state = {
+                  count : 1
+                };
             }
-           buttonClickCounter() {
-                this.countClicks++;
-
+           
+          updateHitCounter() {
+            this.setState ((prevState, props) => {
+              return {count: prevState.count + 1}
+            });
+          }  
+            
+           displayCurrentHits() {
                 var div = document.getElementById('counterDiv'); 
                 if(div === null)
                 {
@@ -28,16 +39,21 @@
                     div.id ='counterDiv';
                     document.getElementById('app').appendChild(div);
                 }
-                div.innerHTML = 'you hit me <b>' +  `${this.countClicks}`  + '</b> times';
+                div.innerHTML = 'you hit me <b>' +  `${this.state.count}`  + '</b> times';
             }
+            
           render() {
             return (
               <div>
-                <button onClick={this.buttonClickCounter}>hit me!</button>
+                <button onClick={(e) => this.handleClick(e)}>{this.props.label}</button>
               </div>
             );
           }
         }
+
+        HitCounter.defaultProps = {
+            label : 'Hit Me!'
+          }
 
         ReactDOM.render(
           <HitCounter />, document.getElementById('app')
