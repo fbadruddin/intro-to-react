@@ -23,8 +23,12 @@ import ToDo from './components/ToDo.js';
     e.preventDefault(); //used to prevent default behavior
     //do not allow the user to create empty to do items
     if(!this.state.newToDoDescription) return;
-    const newTodo = {description: this.state.newToDoDescription, isCompleted: false}; //create new todo
-    this.setState({ todos: [...this.state.todos, newTodo], newToDoDescription: ''}); //add new todo
+    let item = this.state.todos.filter(item => item.description === this.state.newToDoDescription);
+    if(item.length === 0)
+    {
+      const newTodo = {description: this.state.newToDoDescription, isCompleted: false}; //create new todo
+      this.setState({ todos: [...this.state.todos, newTodo], newToDoDescription: ''}); //add new todo
+    }
   }
 
   handleChange(e) {
